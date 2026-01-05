@@ -10,7 +10,7 @@ def process_text(s):
     """Analyze a string and return a small info dict."""
     if s == "":
         # empty string is not allowed
-        raise ValueError("Empty strings is not allowed")
+        raise ValueError("Empty string is not allowed")
 
     vowels = "aeiouAEIOU"
 
