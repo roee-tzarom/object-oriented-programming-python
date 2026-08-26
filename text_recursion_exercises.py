@@ -1,3 +1,5 @@
+"""Exercises in text processing, recursion, and input validation."""
+
 # Assignment 3.5 - Python Programming
 # Tasks:
 # 1) String processing & list comprehensions (process_text)
