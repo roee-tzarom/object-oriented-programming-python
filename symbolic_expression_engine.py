@@ -1,3 +1,9 @@
+"""A small symbolic-mathematics engine with evaluation, simplification, and differentiation.
+
+Expressions are immutable-style objects composed from numbers, variables, and
+unary or binary operations.
+"""
+
 import math
 from abc import ABC, abstractmethod
 
