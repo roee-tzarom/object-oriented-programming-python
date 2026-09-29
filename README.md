@@ -1,42 +1,39 @@
-# Python OOP and Symbolic Expression Exercises
+# Python Expression Trees and Data Utilities
 
-A small Python learning collection whose main component is an object-oriented symbolic expression engine in `symbolic_expression_engine.py`.
+A Python collection centered on a symbolic mathematics engine. It models an expression as a tree of objects, then walks or transforms that tree to evaluate values, substitute variables, differentiate and simplify supported forms. Two smaller scripts explore text, recursion and Python collections.
 
-## Expression engine
+## Symbolic expression engine
 
-An abstract `Expression` interface defines evaluation, variable discovery, substitution, differentiation and simplification. Concrete nodes represent numbers, variables, unary operations (`Neg`, `Sin`, `Cos`) and binary operations (`Add`, `Sub`, `Mul`, `Div`, `Pow`, `Log`). Operator overloads let expressions be assembled with ordinary Python arithmetic syntax.
+`symbolic_expression_engine.py` defines an abstract `Expression` interface. `Num` and `Var` are leaves; unary and binary nodes combine them into formulas. Supported operations include addition, subtraction, multiplication, division, powers, logarithms, negation, sine and cosine. Operator overloads allow normal Python arithmetic syntax while preserving the expression tree.
 
 ```python
-from symbolic_expression_engine import Num, Var, Sin
+from symbolic_expression_engine import Num, Sin, Var
 
 x = Var("x")
-expr = Num(2) * x + Sin(x)
-print(expr.evaluate({"x": 1.0}))
-print(expr.differentiate("x").simplify())
+expression = Num(2) * x + Sin(x)
+print(expression.evaluate({"x": 1.0}))
+print(expression.differentiate("x").simplify())
 ```
 
-The engine illustrates expression trees and transformation rules; it is not a complete computer algebra system. Some rules and simplifications are intentionally limited to the forms implemented in the source.
+Evaluation uses a variable environment. Differentiation creates a new tree according to each node's rule, and simplification applies the rewrite rules implemented by the engine. The source also supports variable discovery and substitution. This is an inspectable model of symbolic transformations rather than a parser for arbitrary user-entered formulas.
 
-## Other exercises
+## Other Python components
 
 | File | Focus |
 | --- | --- |
-| `data_types_exercises.py` | Lists, sets, dictionaries and sample log parsing |
-| `text_recursion_exercises.py` | String processing and recursive digit operations |
+| `data_types_exercises.py` | Aggregate calculations, set operations, dictionary filtering and sample log fields |
+| `text_recursion_exercises.py` | String processing, text framing and recursive digit functions |
 
-Run `python symbolic_expression_engine.py` for its built-in demonstration, or run either other file separately. No third-party packages are required.
+Each file can run independently with Python 3 and the standard library:
 
+```bash
+python symbolic_expression_engine.py
+python data_types_exercises.py
+python text_recursion_exercises.py
+```
 
-## Inside the expression tree
+## Suggested reading path
 
-An expression is represented as a node rather than an immediately computed value. `Var` and `Num` are leaves; arithmetic and trigonometric classes combine them into larger trees. Evaluating a tree walks its nodes with a variable environment. Differentiating it creates another tree according to the rule implemented by each node. Simplification then removes supported redundant forms. The overloaded arithmetic operators make construction concise while the underlying objects remain inspectable.
+Start with `Expression`, `Num` and `Var`; then inspect the unary and binary base classes to see which behavior is shared. Follow `differentiate` on the concrete operations and compare the resulting tree with `simplify`. The other two scripts are separate, short demonstrations of core language features.
 
-For example, build an expression with `Var("x")`, substitute a value for `x`, evaluate it, then request a derivative and simplify the resulting tree. This separation between representation and transformation is the main design idea. The `__main__` demonstration in `symbolic_expression_engine.py` provides further runnable examples.
-
-## Repository map
-
-`data_types_exercises.py` practices common container operations and a sample log-line parse. `text_recursion_exercises.py` explores text routines and recursive digit work. Neither script depends on the expression engine, so each can be run independently with Python 3.
-
-## Limits
-
-The differentiation and simplification code supports the node types and rewrite rules present in the file. It does not attempt arbitrary symbolic identities, equation solving or a general parser for user-entered expressions. Use it as a compact example of polymorphism and tree transformations rather than a replacement for a computer algebra package.
+The symbolic rules cover the node types present in the source. The project does not provide equation solving, a full algebra system or an input-language parser.
